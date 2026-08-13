@@ -34,7 +34,8 @@ export const ThemedGlobalStyle = createGlobalStyle`
   }
 
   button,
-  input:not([type='range'], [type='checkbox'], [type='radio']),
+  input[type='text'],
+  input[type='number'],
   textarea,
   select {
     border: none;
