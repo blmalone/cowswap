@@ -6,6 +6,7 @@ import { darken, lighten, transparentize } from 'color2k'
 import { css } from 'styled-components/macro'
 
 import { Color } from '../colors'
+import { Font } from '../consts'
 import { UI } from '../enum'
 
 /**
@@ -362,9 +363,9 @@ export const ThemeColorVars = css`
     ${UI.COLOR_LINK_OPACITY_10}: ${({ theme }) => transparentize(theme.info, 0.9)};
 
     // Font Weights & Sizes
-    ${UI.FONT_WEIGHT_NORMAL}: 400;
-    ${UI.FONT_WEIGHT_MEDIUM}: 500;
-    ${UI.FONT_WEIGHT_BOLD}: 600;
+    ${UI.FONT_WEIGHT_NORMAL}: ${Font.weight.regular};
+    ${UI.FONT_WEIGHT_MEDIUM}: ${Font.weight.medium};
+    ${UI.FONT_WEIGHT_BOLD}: ${Font.weight.bold};
     ${UI.FONT_SIZE_SMALLER}: 10px;
     ${UI.FONT_SIZE_SMALL}: 12px;
     ${UI.FONT_SIZE_NORMAL}: 14px;
@@ -372,8 +373,8 @@ export const ThemeColorVars = css`
     ${UI.FONT_SIZE_LARGE}: 18px;
     ${UI.FONT_SIZE_LARGER}: 20px;
     ${UI.FONT_SIZE_LARGEST}: 24px;
-    ${UI.FONT_FAMILY_PRIMARY}: 'Inter var', 'Inter', Arial, sans-serif;
-    ${UI.FONT_FAMILY_MONO}: 'Inter var', 'Inter', Arial, sans-serif;
+    ${UI.FONT_FAMILY_PRIMARY}: ${Font.family};
+    ${UI.FONT_FAMILY_MONO}: ${Font.familyMono};
 
     // Animation
     ${UI.ANIMATION_DURATION}: 0.1s;
@@ -383,7 +384,5 @@ export const ThemeColorVars = css`
 
   body {
     ${({ theme }) => theme.colorScrollbar}
-
-    color: var(${UI.COLOR_TEXT_PAPER});
   }
 `
