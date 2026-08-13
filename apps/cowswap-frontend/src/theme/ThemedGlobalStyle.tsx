@@ -48,6 +48,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
 
   button {
     user-select: none;
+    cursor: pointer;
   }
 
   html {
