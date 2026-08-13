@@ -34,7 +34,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
   }
 
   button,
-  input,
+  input:not([type='range'], [type='checkbox'], [type='radio']),
   textarea,
   select {
     border: none;
@@ -44,11 +44,16 @@ export const ThemedGlobalStyle = createGlobalStyle`
     outline: none;
     font: inherit;
     color: inherit;
+    appearance: none;
   }
 
   button {
     user-select: none;
     cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   html {
