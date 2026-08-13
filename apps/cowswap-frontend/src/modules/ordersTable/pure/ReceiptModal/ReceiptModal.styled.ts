@@ -195,7 +195,6 @@ export const LightButton = styled.button`
   transition:
     border var(${UI.ANIMATION_DURATION}) ease-in-out,
     background-color var(${UI.ANIMATION_DURATION}) ease-in-out;
-  cursor: pointer;
   color: inherit;
 
   &:hover {

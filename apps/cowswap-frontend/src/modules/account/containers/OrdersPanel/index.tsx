@@ -102,12 +102,6 @@ const CloseButton = styled.button`
   position: relative;
   opacity: 0.6;
   display: flex;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
 
   &:hover {
     opacity: 1;
