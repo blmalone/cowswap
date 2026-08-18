@@ -29,6 +29,8 @@ export const Header = styled.header<{ withoutBorder?: boolean }>`
 `
 
 export const Title = styled.div`
+  ${font('FONT_LARGE', 'semibold')}
+
   flex: 1;
   min-width: 0;
   display: flex;
