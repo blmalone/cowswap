@@ -18,7 +18,7 @@ export function AffectedPermitOrdersTable({ ordersWithPermit }: AffectedPermitOr
 
   return (
     <>
-      <OrdersReceiptModal pendingOrdersPrices={pendingOrdersPrices} />
+      <OrdersReceiptModal pendingOrdersPrices={pendingOrdersPrices} nested />
 
       {ordersWithPermit.map((order) => (
         <styledEl.OrderWrapper key={order.id}>

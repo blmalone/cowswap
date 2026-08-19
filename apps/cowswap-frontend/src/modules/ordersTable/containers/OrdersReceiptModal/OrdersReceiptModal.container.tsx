@@ -12,15 +12,18 @@ import { PendingOrdersPrices } from 'modules/orders'
 import { useIsProviderNetworkDeprecated } from 'common/hooks/useIsProviderNetworkDeprecated'
 import { calculatePrice } from 'utils/orderUtils/calculatePrice'
 
+import { getReceiptCancellationAction } from './getReceiptCancellationAction'
 import { useCloseReceiptModal, useGetAlternativeOrderModalContext, useSelectedOrder } from './OrdersReceiptModal.hooks'
 
+import { useOrderActions } from '../../hooks/useOrderActions'
 import { ReceiptModal } from '../../pure/ReceiptModal/ReceiptModal.modal'
 
 interface OrdersReceiptModalProps {
   pendingOrdersPrices: PendingOrdersPrices
+  nested?: boolean
 }
 
-export function OrdersReceiptModal({ pendingOrdersPrices }: OrdersReceiptModalProps): ReactNode {
+export function OrdersReceiptModal({ pendingOrdersPrices, nested = false }: OrdersReceiptModalProps): ReactNode {
   // TODO: can we get selected order from URL by id?
   const order = useSelectedOrder()
   const { chainId } = useWalletInfo()
@@ -35,6 +38,8 @@ export function OrdersReceiptModal({ pendingOrdersPrices }: OrdersReceiptModalPr
   const isChainIdDeprecated = useIsProviderNetworkDeprecated()
   const alternativeOrderModalContextFromHook = useGetAlternativeOrderModalContext(order)
   const alternativeOrderModalContext = isChainIdDeprecated ? undefined : alternativeOrderModalContextFromHook
+  const orderActions = useOrderActions()
+  const showCancellationModal = getReceiptCancellationAction(order, orderActions.getShowCancellationModal)
 
   if (!chainId || !order) {
     return null
@@ -43,7 +48,6 @@ export function OrdersReceiptModal({ pendingOrdersPrices }: OrdersReceiptModalPr
   const { inputToken, outputToken, buyAmount, sellAmount } = order
   const { executedBuyAmount, executedSellAmount } = order.executionData
   // Sell and buy amounts
-  const sellAmountCurrency = CurrencyAmount.fromRawAmount(inputToken, sellAmount.toString())
   const buyAmountCurrency = CurrencyAmount.fromRawAmount(outputToken, buyAmount.toString())
 
   const limitPrice = calculatePrice({
@@ -66,7 +70,6 @@ export function OrdersReceiptModal({ pendingOrdersPrices }: OrdersReceiptModalPr
   return (
     <ReceiptModal
       receiverEnsName={receiverEnsName}
-      sellAmount={sellAmountCurrency}
       buyAmount={buyAmountCurrency}
       limitPrice={limitPrice}
       executionPrice={executionPrice}
@@ -78,6 +81,8 @@ export function OrdersReceiptModal({ pendingOrdersPrices }: OrdersReceiptModalPr
       isOpen={!!order}
       onDismiss={closeReceiptModal}
       alternativeOrderModalContext={alternativeOrderModalContext}
+      showCancellationModal={showCancellationModal}
+      nested={nested}
     />
   )
 }

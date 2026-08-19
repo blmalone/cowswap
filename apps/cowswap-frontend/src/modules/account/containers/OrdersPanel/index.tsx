@@ -37,7 +37,7 @@ export function OrdersPanel() {
   return (
     <DrawerOrDialog onOpenChange={handleCloseOrdersPanel} isOpen={isOpen} maxWidth={ACCOUNT_MODAL_MAX_WIDTH}>
       <Modal.Root>
-        <ModalHeader sticky title={<Trans>Account</Trans>} onClose={handleCloseOrdersPanel} />
+        <ModalHeader sticky title={<Trans>Account</Trans>} onClose={handleCloseOrdersPanel} closeOnEscape={false} />
 
         <Modal.Content>
           <AccountDetails

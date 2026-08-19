@@ -19,7 +19,7 @@ export function resolveOverlayHeader({ header, title, onBack, onClose }: Resolve
   }
 
   if (title || onBack) {
-    return <ModalHeader title={title} onBack={onBack} onClose={onClose} />
+    return <ModalHeader title={title} onBack={onBack} onClose={onClose} closeOnEscape={false} />
   }
 
   return undefined

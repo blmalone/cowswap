@@ -1,5 +1,7 @@
 import { MouseEvent, ReactNode, useRef, useState, useEffect } from 'react'
 
+import { t } from '@lingui/core/macro'
+
 import * as styledEl from './styled'
 
 import { Tooltip } from '../Tooltip'
@@ -7,23 +9,27 @@ import { Tooltip } from '../Tooltip'
 interface ContextMenuTooltipProps {
   children: ReactNode
   content: ReactNode
+  ariaLabel?: string
   placement?: 'top' | 'bottom' | 'left' | 'right'
   containerRef?: React.RefObject<HTMLDivElement | null>
   disableHoverBackground?: boolean
+  triggerSize?: number
 }
 
 export function ContextMenuTooltip({
   children,
   content,
+  ariaLabel = t`More options`,
   placement = 'bottom',
   containerRef,
   disableHoverBackground,
+  triggerSize,
 }: ContextMenuTooltipProps): ReactNode {
   const contextMenuRef = useRef<HTMLDivElement>(null)
-  const defaultContainerRef = useRef<HTMLElement>(null)
+  const defaultContainerRef = useRef<HTMLButtonElement>(null)
   const [openTooltip, setOpenTooltip] = useState(false)
 
-  const handleClick = (event: MouseEvent<HTMLDivElement>): void => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation?.()
     event.preventDefault?.()
     setOpenTooltip((prev) => !prev)
@@ -61,20 +67,29 @@ export function ContextMenuTooltip({
   }
 
   return (
-    <styledEl.ContextMenuTooltipButton onClick={handleClick} disableHoverBackground={disableHoverBackground}>
-      <Tooltip
-        content={
-          <styledEl.ContextMenuContent ref={contextMenuRef} onClick={handleTooltipClick}>
-            {content}
-          </styledEl.ContextMenuContent>
-        }
-        placement={placement}
-        wrapInContainer={false}
-        show={openTooltip}
-        containerRef={(containerRef as React.RefObject<HTMLElement>) || defaultContainerRef}
+    <Tooltip
+      content={
+        <styledEl.ContextMenuContent ref={contextMenuRef} role="menu" onClick={handleTooltipClick}>
+          {content}
+        </styledEl.ContextMenuContent>
+      }
+      placement={placement}
+      wrapInContainer={false}
+      show={openTooltip}
+      containerRef={(containerRef as React.RefObject<HTMLElement>) || defaultContainerRef}
+    >
+      <styledEl.ContextMenuTooltipButton
+        ref={defaultContainerRef}
+        type="button"
+        aria-label={ariaLabel}
+        aria-haspopup="menu"
+        aria-expanded={openTooltip}
+        onClick={handleClick}
+        disableHoverBackground={disableHoverBackground}
+        $triggerSize={triggerSize}
       >
         {children}
-      </Tooltip>
-    </styledEl.ContextMenuTooltipButton>
+      </styledEl.ContextMenuTooltipButton>
+    </Tooltip>
   )
 }

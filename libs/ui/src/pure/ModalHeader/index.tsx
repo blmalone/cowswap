@@ -11,6 +11,9 @@ export interface ModalHeaderProps {
   rightSlot?: ReactNode
   onBack?(): void
   onClose?(): void
+  /** Disable when the owning overlay primitive already handles Escape. */
+  closeOnEscape?: boolean
+  closeAriaLabel?: string
   className?: string
 }
 
@@ -24,6 +27,8 @@ export function ModalHeader({
   className,
   onBack,
   onClose,
+  closeOnEscape = true,
+  closeAriaLabel,
 }: ModalHeaderProps): ReactNode {
   const hasBack = !!onBack
   const hasClose = !!onClose
@@ -32,13 +37,19 @@ export function ModalHeader({
   return (
     <styledEl.Header className={rootClass} withoutBorder>
       <styledEl.Inner>
-        <styledEl.BackButton aria-hidden={!hasBack} disabled={!hasBack} onClick={onBack} />
+        <styledEl.BackButton aria-hidden={!hasBack} disabled={!hasBack} onClick={onBack} backOnEscape={closeOnEscape} />
 
         <styledEl.Title>{title || children}</styledEl.Title>
 
         {rightSlot ? <styledEl.RightSlot>{rightSlot}</styledEl.RightSlot> : null}
 
-        <styledEl.CloseButton aria-hidden={!hasClose} disabled={!hasClose} onClick={onClose} />
+        <styledEl.CloseButton
+          aria-label={closeAriaLabel}
+          aria-hidden={!hasClose}
+          disabled={!hasClose}
+          onClick={onClose}
+          closeOnEscape={closeOnEscape}
+        />
       </styledEl.Inner>
     </styledEl.Header>
   )

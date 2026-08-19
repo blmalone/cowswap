@@ -146,7 +146,7 @@ export function OrdersTableWidget({ orderType, onClose }: OrdersTableWidgetProps
         </OrdersTableContainer>
       )}
 
-      {pendingOrdersPrices && <OrdersReceiptModal pendingOrdersPrices={pendingOrdersPrices} />}
+      {pendingOrdersPrices && <OrdersReceiptModal pendingOrdersPrices={pendingOrdersPrices} nested={isUpToLarge} />}
     </>
   )
 }

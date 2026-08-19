@@ -38,7 +38,11 @@ export const ContextMenuButton = styled(MenuButton).attrs({ type: 'button' })`
   }
 `
 
-export const ContextMenuTooltipButton = styled.div<{ disableHoverBackground?: boolean }>`
+export const ContextMenuTooltipButton = styled.button<{
+  disableHoverBackground?: boolean
+  $triggerSize?: number
+}>`
+  appearance: none;
   background: none;
   border: none;
   outline: none;
@@ -46,8 +50,8 @@ export const ContextMenuTooltipButton = styled.div<{ disableHoverBackground?: bo
   margin: 0;
   color: var(${UI.COLOR_TEXT_OPACITY_50});
   cursor: pointer;
-  height: 16px;
-  width: 16px;
+  height: ${({ $triggerSize }) => $triggerSize ?? 16}px;
+  width: ${({ $triggerSize }) => $triggerSize ?? 16}px;
   display: flex;
   align-items: center;
   justify-content: center;

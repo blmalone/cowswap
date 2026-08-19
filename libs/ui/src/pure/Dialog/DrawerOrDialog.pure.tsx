@@ -21,6 +21,10 @@ export interface DrawerOrDialogProps {
   width?: number | string
   /** Dialog-mode CSS `max-width`. Ignored in drawer mode. */
   maxWidth?: number | string
+  /** Renders drawer mode above another open BottomDrawer. Ignored in dialog mode. */
+  nested?: boolean
+  /** Makes drawer mode fill the dynamic viewport. Ignored in dialog mode. */
+  fullScreen?: boolean
 }
 
 export function DrawerOrDialog({
@@ -34,6 +38,8 @@ export function DrawerOrDialog({
   className,
   width,
   maxWidth,
+  nested = false,
+  fullScreen = false,
 }: DrawerOrDialogProps): ReactNode {
   const isUpToLarge = useMediaQuery(Media.upToLarge(false))
 
@@ -57,6 +63,8 @@ export function DrawerOrDialog({
         className={className}
         header={resolvedHeader}
         footer={footer}
+        nested={nested}
+        fullScreen={fullScreen}
       >
         {children}
       </BottomDrawer>
